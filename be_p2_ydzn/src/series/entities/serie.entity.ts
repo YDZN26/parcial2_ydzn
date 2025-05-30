@@ -30,6 +30,9 @@ export class Serie {
   @Column('integer')
   temporadas: number;
 
+  @Column({ name: 'idioma_principal', nullable: true, type: 'varchar', length: 50 })
+  idiomaPrincipal: string;
+
   @Column('date', { name: 'fecha_estreno' })
   fechaEstreno: Date;
 

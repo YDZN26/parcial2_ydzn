@@ -19,6 +19,7 @@ let Serie = class Serie {
     sinopsis;
     director;
     temporadas;
+    idiomaPrincipal;
     fechaEstreno;
     fechaCreacion;
     fechaModificacion;
@@ -50,6 +51,10 @@ __decorate([
     (0, typeorm_1.Column)('integer'),
     __metadata("design:type", Number)
 ], Serie.prototype, "temporadas", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'idioma_principal', nullable: true, type: 'varchar', length: 50 }),
+    __metadata("design:type", String)
+], Serie.prototype, "idiomaPrincipal", void 0);
 __decorate([
     (0, typeorm_1.Column)('date', { name: 'fecha_estreno' }),
     __metadata("design:type", Date)

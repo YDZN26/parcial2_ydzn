@@ -34,6 +34,12 @@ export class CreateSerieDto {
   readonly temporadas: number;
 
   @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  idiomaPrincipal: string;
+
+  @ApiProperty()
   @IsNotEmpty({ message: 'El campo fechaEstreno no debe ser vacío' })
   readonly fechaEstreno: Date;
 }

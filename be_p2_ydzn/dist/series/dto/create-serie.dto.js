@@ -19,6 +19,7 @@ class CreateSerieDto {
     sinopsis;
     director;
     temporadas;
+    idiomaPrincipal;
     fechaEstreno;
 }
 exports.CreateSerieDto = CreateSerieDto;
@@ -57,6 +58,13 @@ __decorate([
     (0, class_validator_1.IsInt)({ message: 'El campo temporadas debe ser de tipo numérico' }),
     __metadata("design:type", Number)
 ], CreateSerieDto.prototype, "temporadas", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MaxLength)(50),
+    __metadata("design:type", String)
+], CreateSerieDto.prototype, "idiomaPrincipal", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)({ message: 'El campo fechaEstreno no debe ser vacío' }),

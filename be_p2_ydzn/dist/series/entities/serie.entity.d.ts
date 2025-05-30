@@ -6,6 +6,7 @@ export declare class Serie {
     sinopsis: string;
     director: string;
     temporadas: number;
+    idiomaPrincipal: string;
     fechaEstreno: Date;
     fechaCreacion: Date;
     fechaModificacion: Date;

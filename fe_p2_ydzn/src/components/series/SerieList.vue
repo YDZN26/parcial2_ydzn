@@ -66,6 +66,7 @@ defineExpose({ obtenerLista })
       <Column field="temporadas" header="Temporadas" />
       <Column field="fechaEstreno" header="Estreno" />
       <Column field="pais.descripcion" header="País" />
+      <Column field="idiomaPrincipal" header="Idioma Principal" />
       <Column header="Acciones">
         <template #body="{ data }">
           <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(data)" />

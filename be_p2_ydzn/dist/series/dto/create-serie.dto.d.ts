@@ -4,5 +4,6 @@ export declare class CreateSerieDto {
     readonly sinopsis: string;
     readonly director: string;
     readonly temporadas: number;
+    idiomaPrincipal: string;
     readonly fechaEstreno: Date;
 }

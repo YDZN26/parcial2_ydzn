@@ -10,6 +10,8 @@ import InputNumber from 'primevue/inputnumber'
 import Button from 'primevue/button'
 import { ref, computed, watch } from 'vue'
 
+const idiomas = ['Espanol', 'Ingles', 'Aleman', 'Frances', 'Portugues']
+
 const ENDPOINT = 'series'
 
 const props = defineProps({
@@ -24,14 +26,14 @@ const emit = defineEmits(['guardar', 'close'])
 
 const paises = ref<Pais[]>([])
 
-// ==== PASO 1: El modelo debe usar Date | null ====
 const serie = ref<Serie>({
   idPais: 0,
   titulo: '',
   sinopsis: '',
   director: '',
   temporadas: 1,
-  fechaEstreno: null, // <--- Date | null
+  fechaEstreno: null,
+  idiomaPrincipal: '',
 })
 
 const dialogVisible = computed({
@@ -42,8 +44,6 @@ const dialogVisible = computed({
 async function obtenerPaises() {
   paises.value = await http.get('paises').then(res => res.data)
 }
-
-// ==== PASO 2: Al abrir el modal, convierte string a Date ====
 watch(
   () => props.mostrar,
   (nuevoValor) => {
@@ -55,7 +55,8 @@ watch(
           serie.value.fechaEstreno = new Date(serie.value.fechaEstreno)
         }
       } else {
-        serie.value = { idPais: 0, titulo: '', sinopsis: '', director: '', temporadas: 1, fechaEstreno: null }
+        serie.value = { idPais: 0, titulo: '', sinopsis: '', director: '', temporadas: 1, fechaEstreno: null, idiomaPrincipal: '' }
+
       }
     }
   }
@@ -63,7 +64,6 @@ watch(
 
 async function handleSave() {
   try {
-    // ==== PASO 3: Antes de guardar, convierte Date a string ("YYYY-MM-DD") ====
     const body = {
       idPais: serie.value.idPais,
       titulo: serie.value.titulo,
@@ -73,6 +73,7 @@ async function handleSave() {
       fechaEstreno: serie.value.fechaEstreno
         ? (serie.value.fechaEstreno as Date).toISOString().slice(0, 10)
         : '',
+        idiomaPrincipal: serie.value.idiomaPrincipal,
     }
     if (props.modoEdicion && serie.value.id) {
       await http.patch(`${ENDPOINT}/${serie.value.id}`, body)
@@ -80,7 +81,8 @@ async function handleSave() {
       await http.post(ENDPOINT, body)
     }
     emit('guardar')
-    serie.value = { idPais: 0, titulo: '', sinopsis: '', director: '', temporadas: 1, fechaEstreno: null }
+    serie.value = { idPais: 0, titulo: '', sinopsis: '', director: '', temporadas: 1, fechaEstreno: null, idiomaPrincipal: '' }
+
     dialogVisible.value = false
   } catch (error: any) {
     alert(error?.response?.data?.message || 'Error al guardar la serie')
@@ -128,6 +130,15 @@ async function handleSave() {
           v-model="serie.fechaEstreno"
           dateFormat="yy-mm-dd"
           showIcon
+          class="flex-auto"
+        />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label class="font-semibold w-4">Idioma principal</label>
+        <Dropdown
+          v-model="serie.idiomaPrincipal"
+          :options="idiomas"
+          placeholder="Seleccione un idioma"
           class="flex-auto"
         />
       </div>
